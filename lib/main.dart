@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:to_do_list/screen/home_page.dart';
-import 'package:to_do_list/screen/login_page.dart';
+import 'package:to_do_list/screen/register_page.dart';
 
 void main() => runApp(const MyApp());
 
@@ -9,7 +8,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(title: 'To-Do List', home: LoginPage());
+    return const MaterialApp(title: 'To-Do List', home: RegisterPage());
   }
 }
 

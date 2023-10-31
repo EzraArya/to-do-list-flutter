@@ -17,27 +17,7 @@ class _HomePageState extends State<HomePage> {
         child: Center(
           child: Column(
             children: [
-              //Login Text
-              Text(
-                'Login',
-                style: TextStyle(
-                  fontFamily: 'Montserrat',
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              //Horizontal Line
-
-              //Username TextField
-
-              //Password TextField
-
-              //Forgot Password
-
-              //Login Button
-
-              //Dont have an account text
-
-              //sign up button
+              
             ],
           ),
         ),
