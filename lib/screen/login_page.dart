@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:to_do_list/constants/colors.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -11,6 +13,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   bool _isHidden = true;
+  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -43,186 +46,231 @@ class _LoginPageState extends State<LoginPage> {
               ),
 
               const SizedBox(height: 47, width: 47),
-
+              
               //Username TextField
-              Column(
-                children: <Widget>[
-                  SizedBox(
-                    width: 265,
-                    height: 42,
-                    child: TextField(
-                      style: GoogleFonts.montserrat(
-                        fontSize: 16,
-                        fontWeight: FontWeight.normal
-                      ),
-                      decoration: InputDecoration(
-                          
-                          labelText: 'Username',
-                          labelStyle: GoogleFonts.montserrat(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 16,
-                            color : const Color.fromARGB(53, 0, 0, 0)
-                          ),
-                          floatingLabelStyle: GoogleFonts.montserrat(
-                            fontWeight: FontWeight.w500,
-                            color :  Colors.black
-                          ),
-                          border: const OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                          ),
-                          enabledBorder: const OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                            borderSide: BorderSide(color: Colors.black, width: 1), 
-                          ),
-                          focusedBorder: const OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                            borderSide: BorderSide(color: Colors.black, width: 1), 
-                          ),
+              Form(
+                key: _formKey,
+                child: Column(
+                  children: <Widget>[
+                    SizedBox(
+                      width: 265,
+                      height: 42,
+                      child: TextFormField(
+                        style: GoogleFonts.montserrat(
+                          fontSize: 16,
+                          fontWeight: FontWeight.normal
                         ),
-                      ),
-                  ),
-
-                  const SizedBox(height: 25),
-
-                  //Password TextField
-
-                  SizedBox(
-                    width: 265,
-                    height: 42,
-                    child: TextField(
-                      obscureText: _isHidden,
-                  
-                      decoration: InputDecoration(
-                          suffixIcon: IconButton(
-                            onPressed: () {
-                              setState(() {
-                                _isHidden = !_isHidden;
-                              });
-                            },
-                            icon: Icon(
-                              _isHidden ? Icons.visibility : Icons.visibility_off,
-                              color: Colors.black,
-                            )
-                          ),
-                          labelText: 'Password',
-                          labelStyle: GoogleFonts.montserrat(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 16,
-                            color :  const Color.fromARGB(53, 0, 0, 0)
-                          ),
-                          floatingLabelStyle: GoogleFonts.montserrat(
-                            fontWeight: FontWeight.w500,
-                            color :  Colors.black
-                          ),
-                          border: const OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                          ),
-                          enabledBorder: const OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                            borderSide: BorderSide(color: Colors.black, width: 1), 
-                          ),
-                          focusedBorder: const OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                            borderSide: BorderSide(color: Colors.black, width: 1), 
-                          ),
-                        ),  
-                      ),
-                  ),
-
-                  //Forgot Password
-                  Padding(
-                    padding: const EdgeInsets.only(right: 55),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: <Widget>[
-                        TextButton(
-                          onPressed: () {
-                            // Handle forgot password
-                          },
-                          child: Text(
-                            'Forgot Password?',
-                            style: GoogleFonts.montserrat(
+                        decoration: InputDecoration(
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.red,
+                              ),
+                              borderRadius: BorderRadius.all(Radius.circular(10))
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.red,
+                              ),
+                              borderRadius: BorderRadius.all(Radius.circular(10))
+                            ),
+                            labelText: 'Username',
+                            labelStyle: GoogleFonts.montserrat(
                               fontWeight: FontWeight.w500,
-                              fontSize: 14,
-                              color: Colors.black
+                              fontSize: 16,
+                              color : const Color.fromARGB(53, 0, 0, 0)
+                            ),
+                            floatingLabelStyle: GoogleFonts.montserrat(
+                              fontWeight: FontWeight.w500,
+                              color :  Colors.black
+                            ),
+                            border:  OutlineInputBorder(
+                              borderRadius: BorderRadius.all(Radius.circular(10)),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(Radius.circular(10)),
+                              borderSide: BorderSide(color: Colors.black, width: 1), 
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(Radius.circular(10)),
+                              borderSide: BorderSide(color: Colors.black, width: 1), 
                             ),
                           ),
+                          validator: (value) {
+                            if (value?.isEmpty ?? true){
+                              return "* Required";
+                            } else {
+                              return null;
+                            }
+                          },
                         ),
-                      ],
                     ),
-                  ),
-
-              SizedBox(width: 50, height: 25,),
-
-              //Login Button
-              SizedBox(
-                width: 265,
-                height: 46,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.black,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.25),
-                        blurRadius: 4,
-                        offset: const Offset(0, 4)
-                      )
-                    ]
-                  ),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      
-                    }, 
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor: Colors.white, backgroundColor: Colors.black,
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(5)),
-                        side : BorderSide(color:  Colors.black),
-                      )
+              
+                    const SizedBox(height: 25),
+              
+                    //Password TextField
+              
+                    SizedBox(
+                      width: 265,
+                      height: 42,
+                      child: TextFormField(
+                        obscureText: _isHidden,
+                        decoration: InputDecoration(
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.red,
+                              ),
+                              borderRadius: BorderRadius.all(Radius.circular(10))
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.red,
+                              ),
+                              borderRadius: BorderRadius.all(Radius.circular(10))
+                            ),
+                            suffixIcon: IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  _isHidden = !_isHidden;
+                                });
+                              },
+                              icon: Icon(
+                                _isHidden ? Icons.visibility : Icons.visibility_off,
+                                color: Colors.black,
+                              )
+                            ),
+                            labelText: 'Password',
+                            labelStyle: GoogleFonts.montserrat(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 16,
+                              color :  const Color.fromARGB(53, 0, 0, 0)
+                            ),
+                            floatingLabelStyle: GoogleFonts.montserrat(
+                              fontWeight: FontWeight.w500,
+                              color :  Colors.black
+                            ),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(Radius.circular(10)),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(Radius.circular(10)),
+                              borderSide: BorderSide(color: Colors.black, width: 1), 
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(Radius.circular(10)),
+                              borderSide: BorderSide(color: Colors.black, width: 1), 
+                            ),
+                          ),
+                          validator: (value) {
+                            if (value?.isEmpty ?? true){
+                              return "* Required";
+                            } else {
+                              return null;
+                          }
+                        },  
+                        ),
                     ),
-                    child: Text(
-                      'Login',
-                      style: GoogleFonts.montserrat(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 24
+              
+                    //Forgot Password
+                    Padding(
+                      padding: const EdgeInsets.only(right: 55),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: <Widget>[
+                          TextButton(
+                            onPressed: () {
+                              // Handle forgot password
+                            },
+                            child: Text(
+                              'Forgot Password?',
+                              style: GoogleFonts.montserrat(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 14,
+                                color: Colors.black
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+              
+                SizedBox(width: 50, height: 25,),
+              
+                //Login Button
+                SizedBox(
+                  width: 265,
+                  height: 46,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.black,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.25),
+                          blurRadius: 4,
+                          offset: const Offset(0, 4)
+                        )
+                      ]
+                    ),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        if(_formKey.currentState?.validate() ?? false){
+                          print('object');
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text('Form is not valid!'))
+                          );
+                        }
+                      }, 
+                      style: ElevatedButton.styleFrom(
+                        foregroundColor: Colors.white, backgroundColor: Colors.black,
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(5)),
+                          side : BorderSide(color:  Colors.black),
+                        )
+                      ),
+                      child: Text(
+                        'Login',
+                        style: GoogleFonts.montserrat(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 24
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-
-              Row(
-              //Dont have an account text
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    "Don't have an account?",
-                    style: GoogleFonts.montserrat(
-                      color : Colors.black.withOpacity(0.53),
-                      fontWeight: FontWeight.w500,
-                      fontSize: 14
-                    )
-                  ),
-
-                  const SizedBox(width: 20),
-                  
-                  //sign up button
-                  TextButton(
-                    onPressed: () {
-                      // Handle sign up logic here
-                    },
-                    child: Text(
-                      'Sign Up',
+              
+                Row(
+                //Dont have an account text
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text(
+                      "Don't have an account?",
                       style: GoogleFonts.montserrat(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 14,
-                        color : Colors.black
+                        color : Colors.black.withOpacity(0.53),
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14
                       )
                     ),
+              
+                    const SizedBox(width: 20),
+                    
+                    //sign up button
+                    TextButton(
+                      onPressed: () {
+                        // Handle sign up logic here
+                      },
+                      child: Text(
+                        'Sign Up',
+                        style: GoogleFonts.montserrat(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 14,
+                          color : Colors.black
+                        )
+                      ),
+                    ),
+                  ],
                   ),
-                ],
+                  ],
                 ),
-                ],
               ),
             ],
             )
